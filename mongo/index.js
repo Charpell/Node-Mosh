@@ -6,9 +6,27 @@ mongoose.connect('mongodb://localhost/playground')
 
 
 const courseSchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true,
+    enum: ['web', 'mobile', 'network'],
+    lowercase: true,
+    trim: true
+  },
   author: String,
-  tags: [ String ],
+  tags: {
+    type: Array,
+    validate: {
+      validator: function(v) {
+        return v && v.length > 0;
+      },
+      message: 'A course should have at least one tag.'
+    }
+  },
   date: {
     type: Date,
     default: Date.now
@@ -22,18 +40,24 @@ const Course = mongoose.model('Course', courseSchema);
 async function createCourse() {
   // Create an object based on that class
   const course = new Course({
-    name: 'Angular.js Course',
+    // name: 'Angular.js Course',
     author: 'Mosh',
     tags: ['angular', 'frontend'],
     isPublished: true
   })
 
   // Save course
-  const result = await course.save()
-  console.log(result)
+  try {
+    const result = await course.save()
+    console.log(result)
+  } catch (ex) {
+    for (field in ex.errors) {
+      console.log(ex.errors[field].message)
+    }
+  }
 }
 
-// createCourse();
+createCourse();
 
 // Query
 async function getCourses() {
@@ -128,4 +152,4 @@ async function removeCourse(id) {
 
 }
 
-removeCourse('5bb0a413461b9f312034c201')
+// removeCourse('5bb0a413461b9f312034c201')
