@@ -3,3 +3,11 @@ Get all the published backend courses
 Sort them by their name
 pick only their name an author
 and display them
+
+
+- Exercise 2
+Get all the published frontend and backend courses
+Sort them by their price in a decending order
+Pick only their name and author
+And display them
+
