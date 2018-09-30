@@ -60,4 +60,17 @@ async function getCoursesAdvance() {
   console.log(courses)
 }
 
+// Pagination
+async function getCoursesPaginate() {
+  const pageNumber = 2;
+  const pageSize = 10;
+
+  const courses = await Course.find({ author: 'Mosh', isPublished: true })
+  .skip((pageNumber - 1) * pageSize)
+  .limit(pageSize)
+  .sort({ name: 1 }) // Sort the course by name
+  .select({ name: 1, tags: 1 })  // Select only fields you want to see
+  console.log(courses)
+}
+
 getCourses()
