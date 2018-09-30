@@ -33,4 +33,31 @@ async function createCourse() {
   console.log(result)
 }
 
-createCourse();
+// createCourse();
+
+// Query
+async function getCourses() {
+  const courses = await Course.find({ author: 'Mosh', isPublished: true })
+  .limit(10)
+  .sort({ name: 1 }) // Sort the course by name
+  .select({ name: 1, tags: 1 })  // Select only fields you want to see
+  console.log(courses)
+}
+
+// Advance Query
+async function getCoursesAdvance() {
+  // const courses = await Course.find({ price: { $gte: 10 , $lte: 20 } }) between 10 and 20
+  // const courses = await Course.find({ price: { $in: [10, 15, 20] } }) Courses that are either 10 or 15 0r 20
+  const courses = await Course.find({ author: /^Mosh/ }) // Regular expressions starts with Mosh
+  const courses = await Course.find({ author: /Hamendani$/i }) // Regular expressions ends with Mosh
+  const courses = await Course.find({ author: /.*Mosh.*/ }) // Regular expressions contains the word Mosh
+  // .or([ { author: 'Mosh'}, { isPublished: true }]) // Get Courses authored by Mosh or Published
+  .and([ ])
+  .limit(10)
+  .sort({ name: 1 })
+  .select({ name: 1, tags: 1 })
+  .count()
+  console.log(courses)
+}
+
+getCourses()
