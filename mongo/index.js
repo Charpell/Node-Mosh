@@ -73,4 +73,45 @@ async function getCoursesPaginate() {
   console.log(courses)
 }
 
-getCourses()
+// getCourses()
+
+
+// There are two ways to update a course; 1Query first and 2Update first
+
+// Query first
+async function updateCourse(id) {
+  const course = await Course.findById(id);
+  if (!course) return;
+
+  // Approach 1
+  course.isPublished = true;
+  course.author = 'Another author';
+
+  // Approach 2
+  course.set({
+    isPublished: true,
+    author: 'Another Author'
+  })
+
+  const result = await course.save();
+  console.log(result);
+}
+
+
+// Update first
+async function updateCourseAlternate(id) {
+  const result = await Course.findByIdAndUpdate({ _id: id}, {
+    $set: {
+      author: 'Mosh',
+      isPublished: false
+    }
+  });
+
+  if(!result) {
+    console.log('Id does not exist')
+  }
+  
+  console.log(result);
+}
+
+updateCourseAlternate('5bb0a413461b9f312034c201');
