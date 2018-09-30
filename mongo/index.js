@@ -114,4 +114,18 @@ async function updateCourseAlternate(id) {
   console.log(result);
 }
 
-updateCourseAlternate('5bb0a413461b9f312034c201');
+// updateCourseAlternate('5bb0a413461b9f312034c201');
+
+
+// Delete
+async function removeCourse(id) {
+  // const result = await Course.deleteOne({ _id: id });
+  // const result = await Course.deleteMany({ _id: id });
+
+  // Return the course that was deleted
+  const course = await Course.findByIdAndRemove(id)
+  console.log(course)
+
+}
+
+removeCourse('5bb0a413461b9f312034c201')
