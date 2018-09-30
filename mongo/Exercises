@@ -11,3 +11,6 @@ Sort them by their price in a decending order
 Pick only their name and author
 And display them
 
+- Exercise 3
+Get all the published courses that are $15 or more,
+or have the bord `by` in their title.
